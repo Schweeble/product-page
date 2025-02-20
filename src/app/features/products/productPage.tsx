@@ -18,13 +18,13 @@ function ProductLayout() {
   const allProducts = [...products.values()];
 
   return (
-    <div className="flex columns-2">
-      <div className="max-w-sm m-4 p-4 rounded-lg shadow-md h-screen">
+    <div className="flex">
+      <div className="w-3/20 flex-none m-4 p-4 rounded-lg shadow-md">
         {allProducts.map((p) => (
           <ProductCard product={p} key={p.id} />
         ))}
       </div>
-      <div>
+      <div className="w-7/10 m-4 p-4 rounded-lg shadow-md">
         <ProductChart productId={selectedProduct} />
       </div>
     </div>

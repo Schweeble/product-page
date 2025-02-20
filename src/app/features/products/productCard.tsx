@@ -1,4 +1,6 @@
+import { useAppDispatch } from "@/app/hooks";
 import { Product } from "@/types/productTypes";
+import { setSelected } from "./productsSlice";
 
 function Tag({ text }: { text: string }) {
   return (
@@ -9,8 +11,17 @@ function Tag({ text }: { text: string }) {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
+  const dispatch = useAppDispatch();
+
+  const clickProduct = () => {
+    dispatch(setSelected(product.id));
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center divide-gray-500 divide-solid">
+    <div
+      className="flex flex-col justify-center items-center divide-gray-500 divide-solid"
+      onClick={clickProduct}
+    >
       <img className="h-50 w-50" src={product.image} />
       <div className="font-bold">{product.title}</div>
       <div className="text-gray-500 text-center">{product.subtitle}</div>

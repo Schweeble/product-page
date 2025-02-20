@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/app/hooks";
 import { selectProducts } from "./productsSlice";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Product } from "@/types/productTypes";
 import {
   ChartConfig,
@@ -8,7 +8,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { Line, LineChart, XAxis, YAxis } from "recharts";
 
 const chartConfig = {
   desktop: {
@@ -23,40 +23,45 @@ const chartConfig = {
 
 function SalesChart({ product }: { product: Product }) {
   return (
-    <Card>
+    <div>
       <CardHeader>
         <CardTitle>Retail Sales</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <LineChart data={product.sales} margin={{ left: 12, right: 12 }}>
-            <CartesianGrid vertical={false} />
+          <LineChart
+            data={product.sales}
+            margin={{ left: 12, right: 12 }}
+            accessibilityLayer
+          >
             <XAxis
               dataKey={"weekEnding"}
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
+            <YAxis domain={["dataMin - 500000", "dataMax + 1000000"]} hide />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line
               dataKey="retailSales"
               type="monotone"
               stroke="var(--color-desktop)"
-              strokeWidth={2}
+              strokeWidth={4}
               dot={false}
+              name="Retail Sales"
             />
             <Line
               dataKey="wholesaleSales"
               type="monotone"
               stroke="var(--color-mobile)"
-              strokeWidth={2}
+              strokeWidth={4}
               dot={false}
+              name="Wholesale Sales"
             />
           </LineChart>
         </ChartContainer>
       </CardContent>
-    </Card>
+    </div>
   );
 }
 
